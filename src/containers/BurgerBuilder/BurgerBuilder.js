@@ -1,5 +1,5 @@
 import React from 'react';
-import Axiliary from '../components/La'
+import Auxiliary from '../../hoc/Auxiliary'
 
 const BurgerBuilder = (props) => (
     <Auxiliary>
