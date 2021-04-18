@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import burgerIngredient from '../../components/Burger/BurgerIngredient/BurgerIngredient';
-// import { useState } from 'react/cjs/react.production.min';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 const BurgerBuilder = (props) => {
-    const [ingredients,setIngredients] = React.useState({salad:1,bacon:1,cheese:2,meat:2});
-    
-    return (
+    const [ingredients, setIngredients] = React.useState({ salad: 0, bacon: 0, cheese: 0, meat: 0 });
+
+    return ( 
     <Auxiliary>
         <div>
-            <Burger ingredients={ingredients} />
-        </div>
+            <Burger ingredients = { ingredients } /> 
+        </div> 
         <div>
-            Build Controls
-        </div>
-    </Auxiliary>
+            <BuildControls />
+        </div> 
+    </Auxiliary >
     );
 };
 

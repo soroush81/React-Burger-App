@@ -1,13 +1,19 @@
 import React from 'react';
 import './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
-const burger = (props) => {
-    const transformedIngredients = Object.keys(props.ingredients).map(igKey =>{
+const Burger = (props) => {
+    let transformedIngredients = Object.keys(props.ingredients)
+    .map(igKey =>{
         return [...Array(props.ingredients[igKey])]
         .map(( _ , i) => {
         return <BurgerIngredient key={igKey+i} type={igKey} />;
-    })
-    })
+    });
+    }).reduce((arr,el)=>{
+            return arr.concat(el);
+    },[]);
+
+    if (transformedIngredients.length === 0)
+        transformedIngredients = <div>please start adding ingredients</div>
     return (
     <div className="Burger">
         <BurgerIngredient type="bread-top" />
@@ -17,4 +23,4 @@ const burger = (props) => {
     );
 }
 
-export default burger;
+export default Burger;
