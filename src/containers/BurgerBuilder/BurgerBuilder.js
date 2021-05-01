@@ -70,7 +70,6 @@ const BurgerBuilder = (props) => {
     }
 
     const purchaseContinueHandler = () => {
-        //alert('You Can Continue');
         setLoading(true);
         const order = {
             ingredients: ingredients,
