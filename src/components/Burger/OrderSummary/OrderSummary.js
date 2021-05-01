@@ -1,13 +1,12 @@
 import React from 'react';
 import Auxiliary from '../../../hoc/Auxiliary';
-import moduleName from '../../../hoc/Auxiliary';
 import Button from '../../UI/Button/Button';
 
 
 const OrderSummary = (props) => {
     const ingredientsSummary = Object.keys(props.ingredients)
         .map(igKey => {
-            return <li>
+            return <li key={igKey} >
                 <span style={{ textTransform: 'capitalize' }}>
                     {igKey}
                 </span> :

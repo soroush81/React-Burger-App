@@ -25,4 +25,4 @@ const SideDrawer = (props) => {
 }
 
 
-export default SideDrawer
+export default SideDrawer;

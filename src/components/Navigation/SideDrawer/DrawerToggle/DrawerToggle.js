@@ -12,4 +12,4 @@ const DrawerToggle = (props) => {
 }
 
 
-export default DrawerToggle
+export default DrawerToggle;

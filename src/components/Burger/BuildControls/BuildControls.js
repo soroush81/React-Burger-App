@@ -27,4 +27,4 @@ const BuildControls = (props) => {
 
 }
 
-export default BuildControls
+export default BuildControls;
