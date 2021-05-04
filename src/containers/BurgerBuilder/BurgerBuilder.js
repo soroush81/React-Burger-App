@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import burgerIngredient from '../../components/Burger/BurgerIngredient/BurgerIngredient';
@@ -16,12 +16,23 @@ const INGREDIENT_PRICES = {
     bacon: 0.7
 }
 const BurgerBuilder = (props) => {
-    const [ingredients, setIngredients] = React.useState({ salad: 0, bacon: 0, cheese: 0, meat: 0 });
+    const [ingredients, setIngredients] = React.useState(null);
     const [totalPrice, setTotalPrice] = React.useState(4);
     const [purchaseable, setPurchaseable] = React.useState(false);
     const [purchasing, setPurchasing] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState(false);
 
+
+    useEffect(() => {
+        axios.get('/ingredients.json')
+            .then(res => {
+                setIngredients(res.data);
+            })
+            .catch(error => {
+                setError(error);
+            })
+    }, [])
 
     const updatePurchaseState = (ingredients) => {
 
@@ -107,19 +118,11 @@ const BurgerBuilder = (props) => {
         disabledInfo[key] = disabledInfo[key] <= 0;
     }
 
-    let orderSummary = <OrderSummary ingredients={ingredients}
-        purchaseCanceled={purchaseCancelHandler}
-        purchaseContinued={purchaseContinueHandler}
-        totalPrice={totalPrice}></OrderSummary>;
-    if (loading) {
-        orderSummary = <Spinner />
+    let orderSummary = null;
+    let burger = (error) ? <p>Ingredients can not be loaded</p> : <Spinner />
 
-    }
-    return (
-        <React.Fragment>
-            <Modal show={purchasing} ModalClosed={purchaseCancelHandler}>
-                {orderSummary}
-            </Modal>
+    if (ingredients) {
+        burger = (<Auxiliary>
             <Burger ingredients={ingredients} />
             <BuildControls
                 ingredientAdded={addIngredientHandler}
@@ -128,6 +131,23 @@ const BurgerBuilder = (props) => {
                 disabled={disabledInfo}
                 price={totalPrice}
                 ordered={purchaseHandler} />
+        </Auxiliary>);
+
+        orderSummary = <OrderSummary ingredients={ingredients}
+            purchaseCanceled={purchaseCancelHandler}
+            purchaseContinued={purchaseContinueHandler}
+            totalPrice={totalPrice}></OrderSummary>;
+    }
+    if (loading) {
+        orderSummary = <Spinner />
+    }
+
+    return (
+        <React.Fragment>
+            <Modal show={purchasing} ModalClosed={purchaseCancelHandler}>
+                {orderSummary}
+            </Modal>
+            {burger}
         </React.Fragment >
     );
 };

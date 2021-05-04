@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
 import Auxiliary from '../Auxiliary';
-// import axios from 'axios';
 
 const WithErrorHandler = (WrappedComponent, axios) => {
 
@@ -20,10 +19,10 @@ const WithErrorHandler = (WrappedComponent, axios) => {
                 setError(error);
                 return Promise.reject(error);
             });
-            // return () => {
-            //     axios.interceptors.request.eject(req);
-            //     axios.interceptors.response.eject(res);
-            // };
+            return () => {
+                axios.interceptors.request.eject(req);
+                axios.interceptors.response.eject(res);
+            };
         }, []);
 
 
